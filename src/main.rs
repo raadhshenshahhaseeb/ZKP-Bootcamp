@@ -13,6 +13,7 @@ fn main() {
     q2(field);
     q3(field);
     q4(field);
+    q5(field);
 }
 
 /// Print congruent values for a set of integers in a given field
@@ -86,6 +87,38 @@ fn q4(field: u32) {
         println!("No modular square root found.");
     }
 }
+
+fn q5(field: u32) {
+    // p(x)= 52x^2 + 24x + 61
+    // q(x) = 40x^2 + 40x + 58
+    // find p(x) + q(x) and p(x)*q(x)
+
+    // Addition p(x) + q(x)
+    let p: [u32; 3] = [52, 24, 61];  // Coefficients [x^2, x^1, x^0]
+    let q: [u32; 3] = [40, 40, 58];  // Coefficients [x^2, x^1, x^0]
+
+    let sum_coeffs: Vec<u32> = p.iter()
+    .zip(q.iter())
+    .map(|(&p, &q)| (p + q) % field)
+    .collect();
+
+
+    let mut r: [u32; 5] = [0; 5];
+
+    // Polynomial multiplication
+    for i in 0..p.len() {
+        for j in 0..q.len() {
+            r[i + j] = (r[i + j] + p[i] * q[j]) % field;
+        }
+    }
+
+    // Output the polynomial coefficients in conventional order
+    println!("Product of p(x) * q(x) = {}x^4 + {}x^3 + {}x^2 + {}x + {}",
+             r[0], r[1], r[2], r[3], r[4]);
+
+    println!("Sum of p(x) + q(x) = {}x^2 + {}x + {}", sum_coeffs[0], sum_coeffs[1], sum_coeffs[2]);
+}
+
 
 /// Adjusts all values in the vector to be congruent within the specified field
 fn congruent(values: &mut Vec<BigRational>, field: u32) {

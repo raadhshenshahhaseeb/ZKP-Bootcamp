@@ -30,6 +30,18 @@ fn q1(field: u32) {
 
 /// Verify additive properties in a field
 fn q2(field: u32) {
+    /* 
+    steps:
+    a = 5 * pow(6,-1,p) % p
+
+    b = 11 * pow(12,-1,p)
+
+    c = 21 * pow(12,-1,p)
+
+    then (a + b) % p == c % p
+
+    */
+
     let values = vec![
         BigRational::new(BigInt::from(5), BigInt::from(6)),
         BigRational::new(BigInt::from(11), BigInt::from(12)),
